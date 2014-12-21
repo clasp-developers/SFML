@@ -1,0 +1,20 @@
+
+* What is this?
+This fork of SFML contains some early test bindings for accessing SFML from clasp
+
+* How do I compile?
+** Get the following dependency libraries as dev version via your package manger
+- pthread
+- opengl
+- xlib
+- xrandr
+- udev
+- freetype
+- glew
+- jpeg
+- sndfile
+- openal
+** Change the folders in the CmakeLists.txt containing flash to point to your version of clasp.
+** Change the folders in ClaspBinding....cpp in the src/SFML/... directories to point to your version of clasp
+** Run cmake-gui, enter the src and build directories, hit configure and select "specify native compilers". Select the clasp compiler from clasp-externals. Hit configure again, then generate.
+** make
