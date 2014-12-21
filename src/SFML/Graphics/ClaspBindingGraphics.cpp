@@ -140,11 +140,11 @@ extern "C" {
 	   // class_<sf::RenderTarget>("render-target", no_default_constructor)
 	   // . def("clear",&sf::RenderTarget::clear)
 	   // ,
-	   class_<sf::RenderWindow,sf::Window,sf::RenderTarget>("render-window",no_default_constructor )
+	   class_<sf::RenderWindow,sf::Window,sf::RenderTarget,sf::RenderTarget>("render-window",no_default_constructor )
 	   . def_constructor("make-render-window",constructor<sf::VideoMode, sf::String>())
 	   . def("get-size",&sf::RenderWindow::getSize)
 	   . def("capture",&sf::RenderWindow::capture)
-	   . def("clear",&sf::RenderWindow::clear)
+	   // . def("clear",&sf::RenderWindow::clear)
    	   // . def("set-view",&sf::RenderWindow::setView)
 	   // . def("get-view",&sf::RenderWindow::getView)
 	   // . def("get-default-view",&sf::RenderWindow::getDefaultView)
