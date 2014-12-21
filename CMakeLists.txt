@@ -25,7 +25,25 @@ set(VERSION_MINOR 1)
 set(VERSION_PATCH 0)
 
 # add the SFML header path
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
+  /home/flash/dev/externals-clasp/boost
+  /home/flash/dev/externals-clasp-build/common/include
+  /home/flash/dev/clasp-src/src/include
+  /home/flash/dev/clasp-src/src/core/bin/boehm/clang-linux-3.6.0/release/link-static 
+  /home/flash/dev/clasp-src/src/clbind/bin/boehm/clang-linux-3.6.0/release/link-static 
+  /home/flash/dev/clasp-src/src)
+
+add_compile_options(-std=c++11
+   -v 
+   -fPIC
+   -D_TARGET_OS_LINUX
+   -DNDEBUG
+   -DUSE_BOEHM
+   -Wl,--start-group
+   /home/flash/dev/clasp-src/src/gctools/bundle/libgctools_boehm_opt.a 
+   /home/flash/dev/clasp-src/src/core/bundle/libcore_boehm_opt.a 
+   /home/flash/dev/clasp-src/src/clbind/bundle/libclbind_boehm_opt.a 
+   -Wl,--end-group)
 
 # add an option for choosing the build type (shared or static)
 if(NOT (SFML_OS_IOS OR SFML_OS_ANDROID))

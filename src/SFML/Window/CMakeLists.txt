@@ -4,6 +4,7 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src/SFML/Window)
 
 # all source files
 set(SRC
+    ${SRCROOT}/ClaspBindingWindow.cpp
     ${SRCROOT}/Context.cpp
     ${INCROOT}/Context.hpp
     ${INCROOT}/Export.hpp

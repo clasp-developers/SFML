@@ -45,6 +45,7 @@ set(SRC
     ${INCROOT}/View.hpp
     ${SRCROOT}/Vertex.cpp
     ${INCROOT}/Vertex.hpp
+    ${SRCROOT}/ClaspBindingGraphics.cpp
 )
 source_group("" FILES ${SRC})
 

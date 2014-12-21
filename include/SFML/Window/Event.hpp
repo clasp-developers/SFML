@@ -216,6 +216,21 @@ public:
         TouchEvent           touch;           ///< Touch events parameters (Event::TouchBegan, Event::TouchMoved, Event::TouchEnded)
         SensorEvent          sensor;          ///< Sensor event parameters (Event::SensorChanged)
     };
+    //inserted for clasp compatibility, undo when exporting member variables is supported
+    EventType             getType(){ return type; }
+    
+    SizeEvent             getSizeEvent(){ return size; }
+    KeyEvent              getKeyEvent(){ return key; }
+    TextEvent             getTextEvent(){ return text; }
+    MouseMoveEvent        getMouseMoveEvent(){ return mouseMove; }
+    MouseButtonEvent      getMouseButtonEvent(){ return mouseButton; }
+    MouseWheelEvent       getMouseWheelEvent(){ return mouseWheel; }
+    JoystickMoveEvent     getJoystickMoveEvent(){ return joystickMove; }
+    JoystickButtonEvent   getJoystickButtonEvent(){ return joystickButton; }
+    JoystickConnectEvent  getJoystickConnectEvent(){ return joystickConnect; }
+    TouchEvent            getTouchEvent(){ return touch; }
+    SensorEvent           getSensorEvent(){ return sensor; }
+    //end inserted for clasp compatibility
 };
 
 } // namespace sf
