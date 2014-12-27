@@ -87,11 +87,8 @@ namespace translate {
   {
     static core::T_sp convert(sf::Event::EventType v)
     {
-      printf("%s:%d  getting converterSym...\n", __FILE__, __LINE__);
       core::Symbol_sp converterSym = core::lisp_intern("SFML","*ENUM-TO-SYMBOL-MAPPER*");
-      printf("%s:%d  getting converter...\n", __FILE__, __LINE__);
       core::SymbolToEnumConverter_sp converter = converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
-      printf("%s:%d  converting...\n", __FILE__, __LINE__);
       return converter->symbolForEnum<sf::Event::EventType>(v);
     }
   };
@@ -111,7 +108,7 @@ namespace translate {
 	  return;
 	}
       }
-      SIMPLE_ERROR(BF("Cannot convert object %s to YOUR_ENUM_TYPE") % _rep_(object) );
+      SIMPLE_ERROR(BF("Cannot convert object %s to sf::Event::EventType") % _rep_(object) );
     }
   };
 
