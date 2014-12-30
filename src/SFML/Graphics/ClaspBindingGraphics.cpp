@@ -1,4 +1,11 @@
-#include <SFML/Window/Event.hpp>
+#include <CLASP-SFML/System/String.hpp>
+
+#include <CLASP-SFML/Window/Event.hpp>
+#include <CLASP-SFML/Window/VideoMode.hpp>
+
+#include <CLASP-SFML/Graphics/Color.hpp>
+#include <CLASP-SFML/Graphics/Rect.hpp>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Drawable.hpp>
@@ -28,137 +35,97 @@ namespace translate {
     //     }
     // };
 
-  template <> struct from_object<sf::VideoMode>
-  {
-    typedef sf::VideoMode DeclareType;
-    DeclareType _v;
-    from_object(core::T_sp obj)
-    {
-      if ( obj.nilp() ) {
-	this->_v.width = 800;
-	this->_v.height = 600;
-	this->_v.bitsPerPixel = 32;
-      } else if ( core::Cons_sp list = obj.asOrNull<core::Cons_O>() ) {
-	// Translate a CONS list into the a VideoMode
-	this->_v.width = oCar(list).as<core::Number_O>()->as_int();
-	list = cCdr(list);
-	this->_v.height = oCar(list).as<core::Number_O>()->as_int();
-	list = cCdr(list);
-	this->_v.bitsPerPixel = (list.nilp())?
-	  32 : oCar(list).as<core::Number_O>()->as_int();
-      } else {
-	SIMPLE_ERROR(BF("Could not convert %s to sf::VideoMode") % core::_rep_(obj));
-      }
-    }
-  };
+  // template <> struct from_object<sf::VideoMode>
+  // {
+  //   typedef sf::VideoMode DeclareType;
+  //   DeclareType _v;
+  //   from_object(core::T_sp obj)
+  //   {
+  //     if ( obj.nilp() ) {
+  // 	this->_v.width = 800;
+  // 	this->_v.height = 600;
+  // 	this->_v.bitsPerPixel = 32;
+  //     } else if ( core::Cons_sp list = obj.asOrNull<core::Cons_O>() ) {
+  // 	// Translate a CONS list into the a VideoMode
+  // 	this->_v.width = oCar(list).as<core::Number_O>()->as_int();
+  // 	list = cCdr(list);
+  // 	this->_v.height = oCar(list).as<core::Number_O>()->as_int();
+  // 	list = cCdr(list);
+  // 	this->_v.bitsPerPixel = (list.nilp())?
+  // 	  32 : oCar(list).as<core::Number_O>()->as_int();
+  //     } else {
+  // 	SIMPLE_ERROR(BF("Could not convert %s to sf::VideoMode") % core::_rep_(obj));
+  //     }
+  //   }
+  // };
 
   
-  template <> struct from_object<const sf::Color &>
-  {
-    typedef sf::Color DeclareType;
-    DeclareType _v;
-    from_object(core::T_sp obj)
-    {
-      if ( obj.nilp() ) {
-      	this->_v.r = 0;
-      	this->_v.g = 0;
-      	this->_v.b = 0;
-      	this->_v.a = 255;
-      } else if ( core::Cons_sp list = obj.asOrNull<core::Cons_O>() ) {
-      	// Translate a CONS list into the a VideoMode
-      	this->_v.r = oCar(list).as<core::Number_O>()->as_int();
-      	list = cCdr(list);
-      	this->_v.g = oCar(list).as<core::Number_O>()->as_int();
-      	list = cCdr(list);
-      	this->_v.b = oCar(list).as<core::Number_O>()->as_int();
-      	list = cCdr(list);
-      	this->_v.a = (list.nilp())?
-      	  255 : oCar(list).as<core::Number_O>()->as_int();
-      } else {
-      	SIMPLE_ERROR(BF("Could not convert %s to sf::Color") % core::_rep_(obj));
-      }
-    }
-  };
-  
-  template <>
-  struct from_object<const sf::String&, std::true_type>
-  {
-    typedef sf::String DeclareType;
-    DeclareType _v;
-    from_object(T_P o) : _v(str_get(o)) {};
-  };
+  // template <>
+  // struct from_object<const sf::String&, std::true_type>
+  // {
+  //   typedef sf::String DeclareType;
+  //   DeclareType _v;
+  //   from_object(T_P o) : _v(str_get(o)) {};
+  // };
 
   
-  template <>
-  struct	from_object<sf::String,std::true_type>
-  {
-    typedef	sf::String		DeclareType;
-    DeclareType _v;
-    from_object(T_P o) : _v(str_get(o)) {};
-  };
+  // template <>
+  // struct	from_object<sf::String,std::true_type>
+  // {
+  //   typedef	sf::String		DeclareType;
+  //   DeclareType _v;
+  //   from_object(T_P o) : _v(str_get(o)) {};
+  // };
   
   
-  template <>
-  struct	from_object<sf::String&,std::true_type>
-  {
-    typedef	sf::String		DeclareType;
-    DeclareType _v;
-    from_object(T_P o) : _v(str_get(o)) {};
-  };
+  // template <>
+  // struct	from_object<sf::String&,std::true_type>
+  // {
+  //   typedef	sf::String		DeclareType;
+  //   DeclareType _v;
+  //   from_object(T_P o) : _v(str_get(o)) {};
+  // };
   
-  template <>
-  struct	from_object<sf::String&,std::false_type>
-  {
-    typedef	sf::String		DeclareType;
-    DeclareType _v;
-    from_object(T_P o) : _v("") {};
-  };
+  // template <>
+  // struct	from_object<sf::String&,std::false_type>
+  // {
+  //   typedef	sf::String		DeclareType;
+  //   DeclareType _v;
+  //   from_object(T_P o) : _v("") {};
+  // };
   
 
   
-  template <>
-  struct to_object<sf::Event::EventType>
-  {
-    static core::T_sp convert(sf::Event::EventType v)
-    {
-      core::Symbol_sp converterSym = core::lisp_intern("SFML","*ENUM-TO-SYMBOL-MAPPER*");
-      core::SymbolToEnumConverter_sp converter = converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
-      return converter->symbolForEnum<sf::Event::EventType>(v);
-    }
-  };
+  // template <>
+  // struct to_object<sf::Event::EventType>
+  // {
+  //   static core::T_sp convert(sf::Event::EventType v)
+  //   {
+  //     core::Symbol_sp converterSym = core::lisp_intern("SFML","*ENUM-TO-SYMBOL-MAPPER*");
+  //     core::SymbolToEnumConverter_sp converter = converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
+  //     return converter->symbolForEnum<sf::Event::EventType>(v);
+  //   }
+  // };
 
-  template <>
-  struct from_object<sf::Event::EventType,std::true_type>
-  {
-    typedef sf::Event::EventType DeclareType;
-    DeclareType _v;
-    from_object(core::T_sp object)
-    {
-      if ( core::Symbol_sp sym = object.asOrNull<core::Symbol_O>() ) {
-	if ( sym.notnilp() ) {
-	  core::Symbol_sp converterSym = core::lisp_intern("SFML","*ENUM-TO-SYMBOL-MAPPER*");
-	  core::SymbolToEnumConverter_sp converter = converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
-	  this->_v = converter->enumForSymbol<sf::Event::EventType>(sym);
-	  return;
-	}
-      }
-      SIMPLE_ERROR(BF("Cannot convert object %s to sf::Event::EventType") % _rep_(object) );
-    }
-  };
+  // template <>
+  // struct from_object<sf::Event::EventType,std::true_type>
+  // {
+  //   typedef sf::Event::EventType DeclareType;
+  //   DeclareType _v;
+  //   from_object(core::T_sp object)
+  //   {
+  //     if ( core::Symbol_sp sym = object.asOrNull<core::Symbol_O>() ) {
+  // 	if ( sym.notnilp() ) {
+  // 	  core::Symbol_sp converterSym = core::lisp_intern("SFML","*ENUM-TO-SYMBOL-MAPPER*");
+  // 	  core::SymbolToEnumConverter_sp converter = converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
+  // 	  this->_v = converter->enumForSymbol<sf::Event::EventType>(sym);
+  // 	  return;
+  // 	}
+  //     }
+  //     SIMPLE_ERROR(BF("Cannot convert object %s to sf::Event::EventType") % _rep_(object) );
+  //   }
+  // };
 
-  
-  template <> struct from_object<const sf::IntRect&>
-  {
-    typedef sf::IntRect DeclareType;
-    DeclareType _v;
-    from_object(core::T_sp obj)
-    {
-      if ( obj.nilp() ) {
-      } else {
-      	SIMPLE_ERROR(BF("Could not convert %s to sf::IntRect") % core::_rep_(obj));
-      }
-    }
-  };
 
   
   template <> struct from_object<const sf::RenderStates&>
@@ -206,9 +173,7 @@ extern "C" {
 	   class_<sf::RenderTarget>("render-target", no_default_constructor)
 	   . def("clear",&sf::RenderTarget::clear)
 	   . def("get-view", &sf::RenderTarget::getView)
-#define ARGS_RenderTarget_draw "(self drawable &optional (states nil))"
-#define DOCS_RenderTarget_draw "Draws the given Drawable onto the RenderTarget"
-	   . def("draw", (void (sf::RenderTarget::*)(const sf::Drawable&, const sf::RenderStates&))&sf::RenderTarget::draw)
+	   . def("draw", (void (sf::RenderTarget::*)(const sf::Drawable&, const sf::RenderStates&))&sf::RenderTarget::draw, policies<>(),  "(self drawable &optional (states nil))", "", "Draws the given Drawable onto the RenderTarget")
 	   ,
 	   class_<sf::RenderWindow,bases<sf::Window,sf::RenderTarget>>("render-window",no_default_constructor )
 	   . def_constructor("make-render-window",constructor<sf::VideoMode, sf::String>())
@@ -219,7 +184,7 @@ extern "C" {
 	   . def_constructor("make-texture", constructor<>())
 	   //. def_constructor("make-texture", constructor<const sf::Texture &>())
 	   . def("create", &sf::Texture::create)
-	   . def("load-from-file", &sf::Texture::loadFromFile)
+	   . def("load-from-file", &sf::Texture::loadFromFile, policies<>(), "(self filename &optional (area nil))")
 	   // . def("load-from-memory", &sf::Texture::loadFromMemory)
 	   // . def("load-from-stream", &sf::Texture::loadFromStream)
 	   // . def("load-from-image", &sf::Texture::loadFromImage)

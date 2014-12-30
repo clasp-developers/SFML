@@ -4,6 +4,7 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src/SFML/Audio)
 
 # all source files
 set(SRC
+    ${SRCROOT}/ClaspBindingAudio.cpp
     ${SRCROOT}/ALCheck.cpp
     ${SRCROOT}/ALCheck.hpp
     ${SRCROOT}/AudioDevice.cpp

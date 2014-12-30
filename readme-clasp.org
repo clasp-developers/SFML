@@ -22,3 +22,15 @@ This fork of SFML contains some early test bindings for accessing SFML from clas
 * What do I do with it?
 - The first goal is to recreate the example from http://www.sfml-dev.org/documentation/2.2/ in common lisp
 - A small lisp test program can be found at https://github.com/HeyFlash/clasp-stuff/blob/master/sfml-test.lsp
+
+* Todo
+** SoundRecorder: There should be a to_object converter for std::vector<std::string> (is there?)
+** SoundBuffer: Missing Assignment operator
+** SoundSource: Missing to_object and from_object converters for const Vector3f&
+** SoundStream: Currently not handling struct Chunk: converters?
+** Sound : Missing assignment operator
+
+* Questions
+** SoundSource: How to handle copy constructors?
+** What to do with static functions
+** What to do with classes that have protected constructors, that are meant to be called by derived classes?
