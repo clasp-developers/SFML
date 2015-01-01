@@ -1,3 +1,4 @@
+#+OPTIONS: H:2
 
 * What is this?
 This fork of SFML contains some early test bindings for accessing SFML from clasp
