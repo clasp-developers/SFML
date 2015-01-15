@@ -6,6 +6,8 @@
 #include <CLASP-SFML/Graphics/Color.hpp>
 #include <CLASP-SFML/Graphics/Rect.hpp>
 
+
+#include <CLASP-SFML/Graphics/BlendMode.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Drawable.hpp>
@@ -13,7 +15,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
-#include "/home/flash/dev/clasp-src/src/include/clasp.h"
+#include "/home/flash/dev/clasp-src/src/clbind/clbind.h"
 #include "/home/flash/dev/clasp-src/src/core/lispVector.h"
 #include "/home/flash/dev/clasp-src/src/core/vectorObjects.h"
 #include "/home/flash/dev/clasp-src/src/core/cons.h"
@@ -170,7 +172,36 @@ extern "C" {
         using namespace clbind;
         package("SF")
 	  [
-	   class_<sf::RenderTarget>("render-target", no_default_constructor)
+
+	   class_<sf::BlendMode>("blend-mode")
+
+	   .enum_<sf::BlendMode::Factor>(core::lisp_intern("SFML", "*BLENDMODE-FACTOR-ENUM-MAPPER*"))
+	   [
+	   value("blend-mode/factor/zero", sf::BlendMode::Factor::Zero),
+	   value("blend-mode/factor/one", sf::BlendMode::Factor::One),
+	   value("blend-mode/factor/src-color", sf::BlendMode::Factor::SrcColor),
+	   value("blend-mode/factor/one-minus-src-color", sf::BlendMode::Factor::OneMinusSrcColor),
+	   value("blend-mode/factor/dst-color", sf::BlendMode::Factor::DstColor),
+	   value("blend-mode/factor/one-minus-dst-color", sf::BlendMode::Factor::OneMinusDstColor),
+	   value("blend-mode/factor/src-alpha", sf::BlendMode::Factor::SrcAlpha),
+	   value("blend-mode/factor/one-minus-src-alpha", sf::BlendMode::Factor::OneMinusSrcAlpha),
+	   value("blend-mode/factor/dst-alpha", sf::BlendMode::Factor::DstAlpha),
+	   value("blend-mode/factor/one-minus-dst-alpha", sf::BlendMode::Factor::OneMinusDstAlpha)
+	   ]
+
+	   .enum_<sf::BlendMode::Equation>(core::lisp_intern("SFML", "*BLENDMODE-EQUATION-ENUM-MAPPER*"))
+	   [
+	   value("blend-mode/equation/add", sf::BlendMode::Equation::Add),
+	   value("blend-mode/equation/subtract", sf::BlendMode::Equation::Subtract)
+	   ]
+
+	   .def_constructor("make-blend-mode", constructor<sf::BlendMode::Factor, sf::BlendMode::Factor, sf::BlendMode::Equation>())
+	   
+	   
+	   
+
+	   
+	   ,class_<sf::RenderTarget>("render-target", no_default_constructor)
 	   . def("clear",&sf::RenderTarget::clear)
 	   . def("get-view", &sf::RenderTarget::getView)
 	   . def("draw", (void (sf::RenderTarget::*)(const sf::Drawable&, const sf::RenderStates&))&sf::RenderTarget::draw, policies<>(),  "(self drawable &optional (states nil))", "", "Draws the given Drawable onto the RenderTarget")

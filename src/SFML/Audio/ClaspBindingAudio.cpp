@@ -7,11 +7,12 @@
 #include <SFML/Audio/SoundSource.hpp>
 #include <SFML/Audio/SoundStream.hpp>
 #include <SFML/System/InputStream.hpp>
+#include <CLASP-SFML/translators.hpp>
 
 #include "/home/flash/dev/clasp-src/src/include/clasp.h"
-#include "/home/flash/dev/clasp-src/src/core/lispVector.h"
-#include "/home/flash/dev/clasp-src/src/core/vectorObjects.h"
-#include "/home/flash/dev/clasp-src/src/core/cons.h"
+// #include "/home/flash/dev/clasp-src/src/core/lispVector.h"
+// #include "/home/flash/dev/clasp-src/src/core/vectorObjects.h"
+// #include "/home/flash/dev/clasp-src/src/core/cons.h"
 #include "/home/flash/dev/clasp-src/src/core/translators.h"  // assorted translators for string etc
 #include "/home/flash/dev/clasp-src/src/core/str.h"
 
@@ -183,20 +184,20 @@ void CLASP_MAIN()
 
 	      \see loadFromMemory, loadFromStream, loadFromSamples, saveToFile)**")
 
-	 // .def("load-from-memory", &sf::SoundBuffer::loadFromMemory,
-	 //      policies<>(), "", "",
-	 //      R"**(\brief Load the sound buffer from a file in memory
+	 .def("load-from-memory", &sf::SoundBuffer::loadFromMemory,
+	      policies<>(), "", "",
+	      R"**(\brief Load the sound buffer from a file in memory
 
-	 //      Here is a complete list of all the supported audio formats
-	 //      ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam
-	 //      w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64
+	      Here is a complete list of all the supported audio formats
+	      ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam
+	      w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64
 
-	 //      \param data        Pointer to the file data in memor
-	 //      \param sizeInBytes Size of the data to load, in byte
+	      \param data        Pointer to the file data in memor
+	      \param sizeInBytes Size of the data to load, in byte
 
-	 //      \return True if loading succeeded, false if it faile
+	      \return True if loading succeeded, false if it faile
 
-	 //      \see loadFromFile, loadFromStream, loadFromSamples)**")
+	      \see loadFromFile, loadFromStream, loadFromSamples)**")
 
 	 .def("load-from-stream", &sf::SoundBuffer::loadFromStream,
 	      policies<>(), "", "",
@@ -211,23 +212,23 @@ void CLASP_MAIN()
 	      \return True if loading succeeded, false if it failed
 
 	      \see loadFromFile, loadFromMemory, loadFromSamples)**")
-	 /*
-	 .def("load-from-samples", &sf::SoundBuffer::loadFromSamples,
-	      policies<>(), "", "",
-	      R"**(\brief Load the sound buffer from an array of audio samples
+	 
+	 // .def("load-from-samples", &sf::SoundBuffer::loadFromSamples,
+	 //      policies<>(), "", "",
+	 //      R"**(\brief Load the sound buffer from an array of audio samples
 
-	      The assumed format of the audio samples is 16 bits signed integer
-	      (sf::Int16).
+	 //      The assumed format of the audio samples is 16 bits signed integer
+	 //      (sf::Int16).
 
-	      \param samples      Pointer to the array of samples in memory
-	      \param sampleCount  Number of samples in the array
-	      \param channelCount Number of channels (1 = mono, 2 = stereo, ...)
-	      \param sampleRate   Sample rate (number of samples to play per second)
+	 //      \param samples      Pointer to the array of samples in memory
+	 //      \param sampleCount  Number of samples in the array
+	 //      \param channelCount Number of channels (1 = mono, 2 = stereo, ...)
+	 //      \param sampleRate   Sample rate (number of samples to play per second)
 
-	      \return True if loading succeeded, false if it failed
+	 //      \return True if loading succeeded, false if it failed
 
-	      \see loadFromFile, loadFromMemory, saveToFile)**")
-	 */
+	 //      \see loadFromFile, loadFromMemory, saveToFile)**")
+
 	 .def("save-to-file", &sf::SoundBuffer::saveToFile,
 	      policies<>(), "", "",
 	      R"**(\brief Save the sound buffer to an audio file
@@ -399,45 +400,45 @@ captured per second. The higher, the better the quality
 	 // ]
 	 .def_constructor("copy-sound-source", constructor<const sf::SoundSource&>())
 
-	 // .def("set-pitch", &sf::SoundSource::setPitch,
-	 //      policies<>(), "", "",
-	 //      R"**(\brief Set the pitch of the sound
+	 .def("set-pitch", &sf::SoundSource::setPitch,
+	      policies<>(), "", "",
+	      R"**(\brief Set the pitch of the sound
 
-	 //      The pitch represents the perceived fundamental frequency
-	 //      of a sound; thus you can make a sound more acute or grave
-	 //      by changing its pitch. A side effect of changing the pitch
-	 //      is to modify the playing speed of the sound as well.
-	 //      The default value for the pitch is 1.
+	      The pitch represents the perceived fundamental frequency
+	      of a sound; thus you can make a sound more acute or grave
+	      by changing its pitch. A side effect of changing the pitch
+	      is to modify the playing speed of the sound as well.
+	      The default value for the pitch is 1.
 
-	 //      \param pitch New pitch to apply to the sound
+	      \param pitch New pitch to apply to the sound
 
-	 //      \see getPitch)**")
+	      \see getPitch)**")
 
-	 // .def("set-volume", &sf::SoundSource::setVolume,
-	 //      policies<>(), "", "",
-	 //      R"**(\brief Set the volume of the sound
+	 .def("set-volume", &sf::SoundSource::setVolume,
+	      policies<>(), "", "",
+	      R"**(\brief Set the volume of the sound
 
-	 //      The volume is a value between 0 (mute) and 100 (full volume).
-	 //      The default value for the volume is 100.
+	      The volume is a value between 0 (mute) and 100 (full volume).
+	      The default value for the volume is 100.
 
-	 //      \param volume Volume of the sound
+	      \param volume Volume of the sound
 
-	 //      \see getVolume)**")
+	      \see getVolume)**")
 
-	 // .def("set-position", (void (sf::SoundSource::*)(float, float, float))
-	 //      &sf::SoundSource::setPosition,
-	 //      policies<>(), "", "",
-	 //      R"**(\brief Set the 3D position of the sound in the audio scene
+	 .def("set-position", (void (sf::SoundSource::*)(float, float, float))
+	      &sf::SoundSource::setPosition,
+	      policies<>(), "", "",
+	      R"**(\brief Set the 3D position of the sound in the audio scene
 
-	 //      Only sounds with one channel (mono sounds) can be
-	 //      spatialized.
-	 //      The default position of a sound is (0, 0, 0).
+	      Only sounds with one channel (mono sounds) can be
+	      spatialized.
+	      The default position of a sound is (0, 0, 0).
 
-	 //      \param x X coordinate of the position of the sound in the scene
-	 //      \param y Y coordinate of the position of the sound in the scene
-	 //      \param z Z coordinate of the position of the sound in the scene
+	      \param x X coordinate of the position of the sound in the scene
+	      \param y Y coordinate of the position of the sound in the scene
+	      \param z Z coordinate of the position of the sound in the scene
 
-	 //      \see getPosition)**")
+	      \see getPosition)**")
 
 	 // .def("set-position", (void (sf::SoundSource::*)(const sf::Vector3f&))
 	 //      &sf::SoundSource::setPosition,
@@ -466,37 +467,37 @@ captured per second. The higher, the better the quality
 
 	      \see isRelativeToListener)**")
 
-	 // .def("set-min-distance", &sf::SoundSource::setMinDistance,
-	 //      policies<>(), "", "",
-	 //      R"**(\brief Set the minimum distance of the sound
+	 .def("set-min-distance", &sf::SoundSource::setMinDistance,
+	      policies<>(), "", "",
+	      R"**(\brief Set the minimum distance of the sound
 
-	 //      The "minimum distance" of a sound is the maximum
-	 //      distance at which it is heard at its maximum volume. Further
-	 //      than the minimum distance, it will start to fade out according
-	 //      to its attenuation factor. A value of 0 ("inside the head
-	 //      of the listener") is an invalid value and is forbidden.
-	 //      The default value of the minimum distance is 1.
+	      The "minimum distance" of a sound is the maximum
+	      distance at which it is heard at its maximum volume. Further
+	      than the minimum distance, it will start to fade out according
+	      to its attenuation factor. A value of 0 ("inside the head
+	      of the listener") is an invalid value and is forbidden.
+	      The default value of the minimum distance is 1.
 
-	 //      \param distance New minimum distance of the sound
+	      \param distance New minimum distance of the sound
 
-	 //      \see getMinDistance, setAttenuation)**")
+	      \see getMinDistance, setAttenuation)**")
 
-	 // .def("set-attenuation", &sf::SoundSource::setAttenuation,
-	 //      policies<>(), "", "",
-	 //      R"**(\brief Set the attenuation factor of the sound
+	 .def("set-attenuation", &sf::SoundSource::setAttenuation,
+	      policies<>(), "", "",
+	      R"**(\brief Set the attenuation factor of the sound
 
-	 //      The attenuation is a multiplicative factor which makes
-	 //      the sound more or less loud according to its distance
-	 //      from the listener. An attenuation of 0 will produce a
-	 //      non-attenuated sound, i.e. its volume will always be the same
-	 //      whether it is heard from near or from far. On the other hand,
-	 //      an attenuation value such as 100 will make the sound fade out
-	 //      very quickly as it gets further from the listener.
-	 //      The default value of the attenuation is 1.
+	      The attenuation is a multiplicative factor which makes
+	      the sound more or less loud according to its distance
+	      from the listener. An attenuation of 0 will produce a
+	      non-attenuated sound, i.e. its volume will always be the same
+	      whether it is heard from near or from far. On the other hand,
+	      an attenuation value such as 100 will make the sound fade out
+	      very quickly as it gets further from the listener.
+	      The default value of the attenuation is 1.
 
-	 //      \param attenuation New attenuation factor of the sound
+	      \param attenuation New attenuation factor of the sound
 
-	 //      \see getAttenuation, setMinDistance)**")
+	      \see getAttenuation, setMinDistance)**")
 
 	 .def("get-pitch", &sf::SoundSource::getPitch,
 	      policies<>(), "", "",
@@ -665,26 +666,26 @@ captured per second. The higher, the better the quality
 
 	      \see openFromMemory, openFromStream)**")
 
-	 // .def("open-from-memory", &sf::Music::openFromMemory,
-	 //      policies<>(), "", "",
-	 //      R"**(\brief Open a music from an audio file in memory
+	 .def("open-from-memory", &sf::Music::openFromMemory,
+	      policies<>(), "", "",
+	      R"**(\brief Open a music from an audio file in memory
 
-	 //      This function doesn't start playing the music (call play()
-	 //      to do so).
-	 //      Here is a complete list of all the supported audio formats:
-	 //      ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
-	 //      w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
-	 //      Since the music is not loaded completely but rather streamed
-	 //      continuously, the \a data must remain available as long as the
-	 //      music is playing (i.e. you can't deallocate it right after calling
-	 //      this function).
+	      This function doesn't start playing the music (call play()
+	      to do so).
+	      Here is a complete list of all the supported audio formats:
+	      ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+	      w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
+	      Since the music is not loaded completely but rather streamed
+	      continuously, the \a data must remain available as long as the
+	      music is playing (i.e. you can't deallocate it right after calling
+	      this function).
 
-	 //      \param data        Pointer to the file data in memory
-	 //      \param sizeInBytes Size of the data to load, in bytes
+	      \param data        Pointer to the file data in memory
+	      \param sizeInBytes Size of the data to load, in bytes
 
-	 //      \return True if loading succeeded, false if it failed
+	      \return True if loading succeeded, false if it failed
 
-	 //      \see openFromFile, openFromStream)**")
+	      \see openFromFile, openFromStream)**")
 
 	 .def("open-from-stream", &sf::Music::openFromStream,
 	      policies<>(), "", "",
