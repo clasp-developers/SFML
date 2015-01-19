@@ -425,7 +425,7 @@ captured per second. The higher, the better the quality
 
 	      \see getVolume)**")
 
-	 .def("set-position", (void (sf::SoundSource::*)(float, float, float))
+	 .def("set-position-fff", (void (sf::SoundSource::*)(float, float, float))
 	      &sf::SoundSource::setPosition,
 	      policies<>(), "", "",
 	      R"**(\brief Set the 3D position of the sound in the audio scene

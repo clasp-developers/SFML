@@ -300,7 +300,7 @@ extern "C" {
 
 		\return Current position of the mouse)**")
 
-	   ,def("mouse/set-position", (void (*)(const sf::Vector2i &))&sf::Mouse::setPosition,
+	   ,def("mouse/set-position-v", (void (*)(const sf::Vector2i &))&sf::Mouse::setPosition,
 		policies<>(), "", "",
 		R"**(\brief Set the current position of the mouse in desktop coordinates
 
@@ -309,7 +309,7 @@ extern "C" {
 
 		\param position New position of the mouse)**")
 
-		,def("mouse/set-position", (void (*)(const sf::Vector2i &, const sf::Window &))&sf::Mouse::setPosition,
+	    ,def("mouse/set-position-vw", (void (*)(const sf::Vector2i &, const sf::Window &))&sf::Mouse::setPosition,
 		policies<>(), "", "",
 		R"**(\brief Set the current position of the mouse in window coordinates
 
@@ -371,7 +371,7 @@ extern "C" {
 
 		\return True if \a finger is currently touching the screen, false otherwise)**")
 
-	   ,def("touch/get-position", (sf::Vector2i (*)(unsigned int))&sf::Touch::getPosition,
+	   ,def("touch/get-position-u", (sf::Vector2i (*)(unsigned int))&sf::Touch::getPosition,
 		policies<>(), "", "",
 		R"**(\brief Get the current position of a touch in desktop coordinates
 
@@ -382,7 +382,7 @@ extern "C" {
 
 		\return Current position of \a finger, or undefined if it's not down)**")
 
-	   ,def("touch/get-position", (sf::Vector2i (*)(unsigned int, const sf::Window &))&sf::Touch::getPosition,
+	   ,def("touch/get-position-uw", (sf::Vector2i (*)(unsigned int, const sf::Window &))&sf::Touch::getPosition,
 		policies<>(), "", "",
 		R"**(\brief Get the current position of a touch in window coordinates
 
@@ -432,13 +432,15 @@ extern "C" {
 
 	   //FIXME: missing operators
 
-	   ,class_<sf::Window>("window")
+	   ,class_<sf::Window>("window", no_default_constructor)
 
-	   .def_constructor("make-window", constructor<sf::VideoMode, sf::String, sf::Uint32, const sf::ContextSettings &>())
+	   .def_constructor("make-window", constructor<>())
+	   
+	   .def_constructor("make-window-vsuc", constructor<sf::VideoMode, sf::String, sf::Uint32, const sf::ContextSettings &>())
 
-	   .def_constructor("make-window", constructor<sf::WindowHandle, const sf::ContextSettings &>())
+	   .def_constructor("make-window-wc", constructor<sf::WindowHandle, const sf::ContextSettings &>())
 
-	   .def("create", (void (sf::Window::*)(sf::VideoMode, const sf::String &, sf::Uint32, const sf::ContextSettings &))&sf::Window::create,
+	   .def("create-vsuc", (void (sf::Window::*)(sf::VideoMode, const sf::String &, sf::Uint32, const sf::ContextSettings &))&sf::Window::create,
 		policies<>(), "", "",
 		R"**(\brief Create (or recreate) the window
 
@@ -455,7 +457,7 @@ extern "C" {
 		\param style    %Window style, a bitwise OR combination of sf::Style enumerators
 		\param settings Additional settings for the underlying OpenGL context)**")
 
-	   .def("create", (void (sf::Window::*)(sf::WindowHandle, const sf::ContextSettings &))&sf::Window::create,
+	   .def("create-wc", (void (sf::Window::*)(sf::WindowHandle, const sf::ContextSettings &))&sf::Window::create,
 		policies<>(), "", "",
 		R"**(\brief Create (or recreate) the window from an existing control
 
