@@ -1,6 +1,8 @@
 #ifndef CLASP_SFML_GENERAL_TRANSLATORS_H
 #define CLASP_SFML_GENERAL_TRANSLATORS_H
 
+#include <limits>
+
 #include "/home/flash/dev/clasp-src/src/clbind/clbind.h"
 
 namespace translate
@@ -50,7 +52,45 @@ namespace translate
     typedef float GivenType;
     static core::T_sp convert(GivenType v)
     {
-      core::DoubleFloat_sp oi = core::SingleFloat_O::create(v);
+      core::SingleFloat_sp oi = core::SingleFloat_O::create(v);
+      return(oi);
+    }
+  };
+
+
+
+  template <>
+  struct from_object<unsigned char>
+  {
+    typedef unsigned char DeclareType;
+    DeclareType _v;
+    from_object(T_P o)
+    {
+      if ( core::Number_sp vv = o.asOrNull<core::Number_O>() )
+      {
+	int value = vv->as_int();
+	if (   (value < std::numeric_limits<unsigned char>::min())
+	    || (value > std::numeric_limits<unsigned char>::max()))
+	{
+	  SIMPLE_ERROR(BF("Value cannot be converted to unsigned char"));
+	}
+	else
+	  this->_v = value;
+      }
+      else
+      {
+	SIMPLE_ERROR(BF("Add support to convert other types to float"));
+      }
+    }
+  };
+  
+  template <>
+  struct to_object<unsigned char>
+  {
+    typedef unsigned char GivenType;
+    static core::T_sp convert(GivenType v)
+    {
+      core::Fixnum_sp oi = core::Fixnum_O::create(v);
       return(oi);
     }
   };

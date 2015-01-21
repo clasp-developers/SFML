@@ -12,6 +12,8 @@
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/ConvexShape.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Drawable.hpp>
@@ -426,7 +428,7 @@ extern "C" {
 
 		\see getOutlineThickness)**")
 
-	   .def("get-texture", &sf::Shape::getTexture,
+	   .def("shape/get-texture", &sf::Shape::getTexture,
 		policies<>(), "", "",
 		R"**(\brief Get the source texture of the shape
 
@@ -618,6 +620,308 @@ extern "C" {
 
 		\see setPoint)**")
 
+	   ,class_<sf::Font>("font", no_default_constructor)
+	   //FIXME: struct info family missing
+	   .def_constructor("make-font", constructor<>())
+	   .def_constructor("copy-font", constructor<const sf::Font &>())
+
+	   .def("load-from-file", &sf::Font::loadFromFile,
+		policies<>(), "", "",
+		R"**(\brief Load the font from a file
+
+		The supported font formats are: TrueType, Type 1, CFF,
+		OpenType, SFNT, X11 PCF, Windows FNT, BDF, PFR and Type 42.
+		Note that this function know nothing about the standard
+		fonts installed on the user's system, thus you can't
+		load them directly.
+
+		\param filename Path of the font file to load
+
+		\return True if loading succeeded, false if it failed
+
+		\see loadFromMemory, loadFromStream)**")
+
+	   .def("load-from-memory", &sf::Font::loadFromMemory,
+		policies<>(), "", "",
+		R"**(\brief Load the font from a file in memory
+
+		The supported font formats are: TrueType, Type 1, CFF,
+		OpenType, SFNT, X11 PCF, Windows FNT, BDF, PFR and Type 42.
+		Warning: SFML cannot preload all the font data in this
+		function, so the buffer pointed by \a data has to remain
+		valid as long as the font is used.
+
+		\param data        Pointer to the file data in memory
+		\param sizeInBytes Size of the data to load, in bytes
+
+		\return True if loading succeeded, false if it failed
+
+		\see loadFromFile, loadFromStream)**")
+
+	   // .def("load-from-stream", &sf::Font::loadFromStream,
+	   // 	policies<>(), "", "",
+	   // 	R"**(\brief Load the font from a custom stream
+
+	   // 	The supported font formats are: TrueType, Type 1, CFF,
+	   // 	OpenType, SFNT, X11 PCF, Windows FNT, BDF, PFR and Type 42.
+	   // 	Warning: SFML cannot preload all the font data in this
+	   // 	function, so the contents of \a stream have to remain
+	   // 	valid as long as the font is used.
+
+	   // 	\param stream Source stream to read from
+
+	   // 	\return True if loading succeeded, false if it failed
+
+	   // 	\see loadFromFile, loadFromMemory)**")
+
+	   // .def("get-info", &sf::Font::getInfo,
+	   // 	policies<>(), "", "",
+	   // 	R"**(\brief Get the font information
+
+	   // 	\return A structure that holds the font information)**")
+
+	   // .def("get-glyph", &sf::Font::getGlyph,
+	   // 	policies<>(), "", "",
+	   // 	R"**(\brief Retrieve a glyph of the font
+
+	   // 	If the font is a bitmap font, not all character sizes
+	   // 	might be available. If the glyph is not available at the
+	   // 	requested size, an empty glyph is returned.
+
+	   // 	\param codePoint     Unicode code point of the character to get
+	   // 	\param characterSize Reference character size
+	   // 	\param bold          Retrieve the bold version or the regular one?
+
+	   // 	\return The glyph corresponding to \a codePoint and \a characterSize)**")
+
+	   .def("get-kerning", &sf::Font::getKerning,
+		policies<>(), "", "",
+		R"**(\brief Get the kerning offset of two glyphs
+
+		The kerning is an extra offset (negative) to apply between two
+		glyphs when rendering them, to make the pair look more "natural".
+		For example, the pair "AV" have a special kerning to make them
+		closer than other characters. Most of the glyphs pairs have a
+		kerning offset of zero, though.
+
+		\param first         Unicode code point of the first character
+		\param second        Unicode code point of the second character
+		\param characterSize Reference character size
+
+		\return Kerning value for \a first and \a second, in pixels)**")
+
+	   .def("get-line-spacing", &sf::Font::getLineSpacing,
+		policies<>(), "", "",
+		R"**(\brief Get the line spacing
+
+		Line spacing is the vertical offset to apply between two
+		consecutive lines of text.
+
+		\param characterSize Reference character size
+
+		\return Line spacing, in pixels)**")
+
+	   .def("get-underline-position", &sf::Font::getUnderlinePosition,
+		policies<>(), "", "",
+		R"**(\brief Get the position of the underline
+
+		Underline position is the vertical offset to apply between the
+		baseline and the underline.
+
+		\param characterSize Reference character size
+
+		\return Underline position, in pixels
+
+		\see getUnderlineThickness)**")
+
+	   .def("get-underline-thickness", &sf::Font::getUnderlineThickness,
+		policies<>(), "", "",
+		R"**(\brief Get the thickness of the underline
+
+		Underline thickness is the vertical size of the underline.
+
+		\param characterSize Reference character size
+
+		\return Underline thickness, in pixels
+
+		\see getUnderlinePosition)**")
+
+	   .def("font/get-texture", &sf::Font::getTexture,
+		policies<>(), "", "",
+		R"**(\brief Retrieve the texture containing the loaded glyphs of a certain size
+
+		The contents of the returned texture changes as more glyphs
+		are requested, thus it is not very relevant. It is mainly
+		used internally by sf::Text.
+
+		\param characterSize Reference character size
+
+		\return Texture containing the glyphs of the requested size)**")
+
+	   //FIXME: Missing class Glyph
+
+	   ,class_<sf::Image>("image", no_default_constructor)
+	   .def_constructor("make-image", constructor<>())
+
+	   .def("image/create", (void (sf::Image::*)(unsigned int, unsigned int, const sf::Color&))&sf::Image::create,
+		policies<>(), "", "",
+		R"**(\brief Create the image and fill it with a unique color
+
+		\param width  Width of the image
+		\param height Height of the image
+		\param color  Fill color)**")
+
+	   // .def("create-from-array", (void (sf::Image::*)(unsigned int, unsigned int, const sf::Uint8*))&sf::Image::create,
+	   // 	policies<>(), "", "",
+	   // 	R"**(\brief Create the image from an array of pixels
+
+	   // 	The \a pixel array is assumed to contain 32-bits RGBA pixels,
+	   // 	and have the given \a width and \a height. If not, this is
+	   // 	an undefined behavior.
+	   // 	If \a pixels is null, an empty image is created.
+
+	   // 	\param width  Width of the image
+	   // 	\param height Height of the image
+	   // 	\param pixels Array of pixels to copy to the image)**")
+
+	   .def("load-from-memory", &sf::Image::loadFromMemory,
+		policies<>(), "", "",
+		R"**(\brief Load the image from a file in memory
+
+		The supported image formats are bmp, png, tga, jpg, gif,
+		psd, hdr and pic. Some format options are not supported,
+		like progressive jpeg.
+		If this function fails, the image is left unchanged.
+
+		\param data Pointer to the file data in memory
+		\param size Size of the data to load, in bytes
+
+		\return True if loading was successful
+
+		\see loadFromFile, loadFromStream)**")
+
+	   // .def("load-from-stream", &sf::Image::loadFromStream,
+	   // 	policies<>(), "", "",
+	   // 	R"**(\brief Load the image from a custom stream
+
+	   // 	The supported image formats are bmp, png, tga, jpg, gif,
+	   // 	psd, hdr and pic. Some format options are not supported,
+	   // 	like progressive jpeg.
+	   // 	If this function fails, the image is left unchanged.
+
+	   // 	\param stream Source stream to read from
+
+	   // 	\return True if loading was successful
+
+	   // 	\see loadFromFile, loadFromMemory)**")
+
+	   .def("save-to-file", &sf::Image::saveToFile,
+		policies<>(), "", "",
+		R"**(\brief Save the image to a file on disk
+
+		The format of the image is automatically deduced from
+		the extension. The supported image formats are bmp, png,
+		tga and jpg. The destination file is overwritten
+		if it already exists. This function fails if the image is empty.
+
+		\param filename Path of the file to save
+
+		\return True if saving was successful
+
+		\see create, loadFromFile, loadFromMemory)**")
+
+	   .def("get-size", &sf::Image::getSize,
+		policies<>(), "", "",
+		R"**(\brief Return the size (width and height) of the image
+
+		\return Size of the image, in pixels)**")
+
+	   .def("create-mask-from-color", &sf::Image::createMaskFromColor,
+		policies<>(), "", "",
+		R"**(\brief Create a transparency mask from a specified color-key
+
+		This function sets the alpha value of every pixel matching
+		the given color to \a alpha (0 by default), so that they
+		become transparent.
+
+		\param color Color to make transparent
+		\param alpha Alpha value to assign to transparent pixels)**")
+
+	   .def("copy", &sf::Image::copy,
+		policies<>(), "", "",
+		R"**(\brief Copy pixels from another image onto this one
+
+		This function does a slow pixel copy and should not be
+		used intensively. It can be used to prepare a complex
+		static image from several others, but if you need this
+		kind of feature in real-time you'd better use sf::RenderTexture.
+
+		If \a sourceRect is empty, the whole image is copied.
+		If \a applyAlpha is set to true, the transparency of
+		source pixels is applied. If it is false, the pixels are
+		copied unchanged with their alpha value.
+
+		\param source     Source image to copy
+		\param destX      X coordinate of the destination position
+		\param destY      Y coordinate of the destination position
+		\param sourceRect Sub-rectangle of the source image to copy
+		\param applyAlpha Should the copy take in account the source transparency?)**")
+
+	   .def("set-pixel", &sf::Image::setPixel,
+		policies<>(), "", "",
+		R"**(\brief Change the color of a pixel
+
+		This function doesn't check the validity of the pixel
+		coordinates, using out-of-range values will result in
+		an undefined behavior.
+
+		\param x     X coordinate of pixel to change
+		\param y     Y coordinate of pixel to change
+		\param color New color of the pixel
+
+		\see getPixel)**")
+
+	   .def("get-pixel", &sf::Image::getPixel,
+		policies<>(), "", "",
+		R"**(\brief Get the color of a pixel
+
+		This function doesn't check the validity of the pixel
+		coordinates, using out-of-range values will result in
+		an undefined behavior.
+
+		\param x X coordinate of pixel to get
+		\param y Y coordinate of pixel to get
+
+		\return Color of the pixel at coordinates (x, y)
+
+		\see setPixel)**")
+
+	   .def("get-pixels-ptr", &sf::Image::getPixelsPtr,
+		policies<>(), "", "",
+		R"**(\brief Get a read-only pointer to the array of pixels
+
+		The returned value points to an array of RGBA pixels made of
+		8 bits integers components. The size of the array is
+		width * height * 4 (getSize().x * getSize().y * 4).
+		Warning: the returned pointer may become invalid if you
+		modify the image, so you should never store it for too long.
+		If the image is empty, a null pointer is returned.
+
+		\return Read-only pointer to the array of pixels)**")
+
+	   .def("flip-horizontally", &sf::Image::flipHorizontally,
+		policies<>(), "", "",
+		R"**(\brief Flip the image horizontally (left <-> right))**")
+
+	   .def("flip-vertically", &sf::Image::flipVertically,
+		policies<>(), "", "",
+		R"**(\brief Flip the image vertically (top <-> bottom))**")
+
+	   
+
+	   
+	   
+
 	   
 	   
 
@@ -642,7 +946,7 @@ extern "C" {
 	   class_<sf::Texture>("texture")
 	   . def_constructor("make-texture", constructor<>())
 	   //. def_constructor("make-texture", constructor<const sf::Texture &>())
-	   . def("create", &sf::Texture::create)
+	   . def("texture/create", &sf::Texture::create)
 	   . def("load-from-file", &sf::Texture::loadFromFile, policies<>(), "(self filename &optional (area nil))")
 	   // . def("load-from-memory", &sf::Texture::loadFromMemory)
 	   // . def("load-from-stream", &sf::Texture::loadFromStream)
@@ -650,10 +954,10 @@ extern "C" {
 	   // . def("get-size", &sf::Texture::getSize)
 	   // . def("copy-to-image", &sf::Texture::copyToImage)
 	   //missing definitions here
-	   ,
-	   class_<sf::Drawable> ("drawable",no_default_constructor)
-	   ,
-	   class_<sf::Transformable> ("transformable")
+	   // ,
+	   // class_<sf::Drawable> ("drawable",no_default_constructor)
+	   // ,
+	   // class_<sf::Transformable> ("transformable")
 	   ,
 	   class_<sf::Sprite,sf::Drawable> ("sprite")
 	   //. def_constructor("make-sprite", constructor<>())
