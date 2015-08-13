@@ -15,10 +15,9 @@ This fork of SFML contains some early test bindings for accessing SFML from clas
   - jpeg
   - sndfile
   - openal
-- Change the folders in the CmakeLists.txt containing flash to point to your version of clasp.
-- Change the folders in ClaspBinding....cpp in the src/SFML/... directories to point to your version of clasp
-- Run cmake-gui, enter the src and build directories, hit configure and select "specify native compilers". Select the clasp compiler from clasp-externals. Hit configure again, then generate.
-- make
+- Run cmake-gui, enter the src and build directories, hit configure and select "specify native compilers" and select the clang compiler from clasp-externals.
+- You will get an error message about two missing directories. Specifiy the CLASP_INCLUDE_PATH and EXTERNALS_CLASP_PATH manually. Hit configure again.
+- call "make" in the sfml build directory that you specified.
 
 * What do I do with it?
 - The first goal is to recreate the example from http://www.sfml-dev.org/documentation/2.2/ in common lisp

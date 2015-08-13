@@ -3,12 +3,13 @@
 #include <SFML/System/Mutex.hpp>
 #include <SFML/System/Lock.hpp>
 
-#include "/home/flash/dev/clasp-src/src/include/clasp.h"
-#include "/home/flash/dev/clasp-src/src/core/lispVector.h"
-#include "/home/flash/dev/clasp-src/src/core/vectorObjects.h"
-#include "/home/flash/dev/clasp-src/src/core/cons.h"
-#include "/home/flash/dev/clasp-src/src/core/translators.h"  // assorted translators for string etc
-#include "/home/flash/dev/clasp-src/src/core/str.h"
+#include <clasp/core/foundation.h>
+#include <clasp/clbind/clbind.h>
+#include <clasp/core/lispVector.h>
+#include <clasp/core/vectorObjects.h>
+#include <clasp/core/cons.h>
+#include <clasp/core/translators.h>
+#include <clasp/core/str.h>
 
 #include <cstdlib>
 

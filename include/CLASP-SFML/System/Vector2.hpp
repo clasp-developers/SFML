@@ -4,7 +4,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "/home/flash/dev/clasp-src/src/clbind/clbind.h"
+#include <clasp/clbind/clbind.h>
 
 namespace translate
 {
@@ -14,12 +14,12 @@ namespace translate
     DeclareType _v;
     from_object(core::T_sp obj)
     {
-      if ( core::Cons_sp list = obj.asOrNull<core::Cons_O>() )
+      if ( core::List_sp list = obj.asOrNull<core::List_V>() )
       {
 	// Translate a CONS list into a Vector
-	this->_v.x = oCar(list).as<core::Number_O>()->as_type<T>();
-	list = cCdr(list);
-	this->_v.y = oCar(list).as<core::Number_O>()->as_type<T>();
+	this->_v.x = clasp_to_fixnum(gc::As<core::Integer_sp>(oCar(list)));
+	list = oCdr(list);
+	this->_v.y = clasp_to_fixnum(gc::As<core::Integer_sp>(oCar(list)));
       }
       else
       {

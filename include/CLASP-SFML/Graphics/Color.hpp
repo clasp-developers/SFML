@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/Color.hpp>
 
-#include "/home/flash/dev/clasp-src/src/clbind/clbind.h"
+#include <clasp/clbind/clbind.h>
 
 namespace translate
 {
@@ -19,16 +19,16 @@ namespace translate
       	this->_v.g = 0;
       	this->_v.b = 0;
       	this->_v.a = 255;
-      } else if ( core::Cons_sp list = obj.asOrNull<core::Cons_O>() ) {
+      } else if ( core::List_sp list = obj.asOrNull<core::List_V>() ) {
       	// Translate a CONS list into the a VideoMode
-      	this->_v.r = oCar(list).as<core::Number_O>()->as_int();
-      	list = cCdr(list);
-      	this->_v.g = oCar(list).as<core::Number_O>()->as_int();
-      	list = cCdr(list);
-      	this->_v.b = oCar(list).as<core::Number_O>()->as_int();
-      	list = cCdr(list);
-      	this->_v.a = (list.nilp())?
-      	  255 : oCar(list).as<core::Number_O>()->as_int();
+      	this->_v.r = clasp_to_fixnum(gc::As<core::Integer_sp>(oCar(list)));
+      	list = oCdr(list);
+      	this->_v.g = clasp_to_fixnum(gc::As<core::Integer_sp>(oCar(list)));
+      	list = oCdr(list);
+      	this->_v.b = clasp_to_fixnum(gc::As<core::Integer_sp>(oCar(list)));
+      	list = oCdr(list);
+      	this->_v.a = (oCar(list).nilp())?
+      	  255 : clasp_to_fixnum(gc::As<core::Integer_sp>(oCar(list)));
       } else {
       	SIMPLE_ERROR(BF("Could not convert %s to sf::Color") % core::_rep_(obj));
       }

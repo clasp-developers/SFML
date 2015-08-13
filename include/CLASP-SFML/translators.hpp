@@ -3,7 +3,7 @@
 
 #include <limits>
 
-#include "/home/flash/dev/clasp-src/src/clbind/clbind.h"
+#include <clasp/clbind/clbind.h>
 
 namespace translate
 {
@@ -32,17 +32,7 @@ namespace translate
   {
     typedef float DeclareType;
     DeclareType _v;
-    from_object(T_P o)
-    {
-      if ( core::Number_sp vv = o.asOrNull<core::Number_O>() )
-      {
-	this->_v = vv->as_float();
-      }
-      else
-      {
-	SIMPLE_ERROR(BF("Add support to convert other types to float"));
-      }
-    }
+    from_object(core::T_sp o) : _v(clasp_to_float(gc::As<core::Number_sp>(o))){}
   };
 
   
@@ -52,7 +42,7 @@ namespace translate
     typedef float GivenType;
     static core::T_sp convert(GivenType v)
     {
-      core::SingleFloat_sp oi = core::SingleFloat_O::create(v);
+      core::DoubleFloat_sp oi = core::DoubleFloat_O::create(v);
       return(oi);
     }
   };
@@ -64,24 +54,7 @@ namespace translate
   {
     typedef unsigned char DeclareType;
     DeclareType _v;
-    from_object(T_P o)
-    {
-      if ( core::Number_sp vv = o.asOrNull<core::Number_O>() )
-      {
-	int value = vv->as_int();
-	if (   (value < std::numeric_limits<unsigned char>::min())
-	    || (value > std::numeric_limits<unsigned char>::max()))
-	{
-	  SIMPLE_ERROR(BF("Value cannot be converted to unsigned char"));
-	}
-	else
-	  this->_v = value;
-      }
-      else
-      {
-	SIMPLE_ERROR(BF("Add support to convert other types to float"));
-      }
-    }
+    from_object(T_P o) :_v(clasp_toUint8(gc::As<core::Number_sp>(o))){}
   };
   
   template <>
@@ -90,8 +63,8 @@ namespace translate
     typedef unsigned char GivenType;
     static core::T_sp convert(GivenType v)
     {
-      core::Fixnum_sp oi = core::Fixnum_O::create(v);
-      return(oi);
+      core::Integer_sp oi = core::Integer_O::create((gc::Fixnum)v);
+      return oi;
     }
   };
 
@@ -108,7 +81,7 @@ namespace translate
 	_v = o.asFixnum();
 	return;
       } else if (core::Integer_sp i = o.asOrNull<core::Integer_O>()) {
-	_v = i->as_int();
+	_v = i->as_int_();
 	return;
       }
       SIMPLE_ERROR(BF("Add support to convert type: %s to short int") % _rep_(o));

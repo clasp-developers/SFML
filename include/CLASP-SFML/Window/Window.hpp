@@ -3,7 +3,7 @@
 
 // #include <SFML/Window/Window.hpp>
 
-// #include "/home/flash/dev/clasp-src/src/clbind/clbind.h"
+// #include <clasp/clbind/clbind.h>
 
 // namespace clsf
 // {

@@ -23,14 +23,16 @@ set(VERSION_MAJOR 2)
 set(VERSION_MINOR 2)
 set(VERSION_PATCH 0)
 
+find_path(CLASP_INCLUDE_PATH clasp/clasp.h DOC "The include directory of clasp")
+find_path(EXTERNALS_CLASP_PATH gc_cpp.h DOC "The directory of externals-clasp")
+
 # add the SFML header path
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
-  /home/flash/dev/externals-clasp/boost
-  /home/flash/dev/externals-clasp-build/common/include
-  /home/flash/dev/clasp-src/src/include
-  /home/flash/dev/clasp-src/src/core/bin/boehm/clang-linux-3.6.0/release/link-static 
-  /home/flash/dev/clasp-src/src/clbind/bin/boehm/clang-linux-3.6.0/release/link-static 
-  /home/flash/dev/clasp-src/src)
+  ${CLASP_INCLUDE_PATH}
+  ${EXTERNALS_CLASP_PATH}/build/common/include
+  #/home/flash/dev/externals-clasp/build/common/include
+  #/home/flash/dev/clasp-src/include
+  )
 
 add_compile_options(-std=c++11
    -v 
@@ -38,10 +40,11 @@ add_compile_options(-std=c++11
    -D_TARGET_OS_LINUX
    -DNDEBUG
    -DUSE_BOEHM
+   -D_ADDRESS_MODEL_64
    -Wl,--start-group
-   /home/flash/dev/clasp-src/src/gctools/bundle/libgctools_boehm_opt.a 
-   /home/flash/dev/clasp-src/src/core/bundle/libcore_boehm_opt.a 
-   /home/flash/dev/clasp-src/src/clbind/bundle/libclbind_boehm_opt.a 
+   /home/flash/dev/clasp-src/src/gctools/bin/boehm/clasp/clang-linux-3.6.2/release/link-static/libgctools.a
+   /home/flash/dev/clasp-src/src/core/bin/boehm/clasp/clang-linux-3.6.2/release/link-static/libcore.a
+   /home/flash/dev/clasp-src/src/clbind/bin/boehm/clasp/clang-linux-3.6.2/release/link-static/libclbind.a
    -Wl,--end-group)
 
 # add an option for choosing the build type (shared or static)

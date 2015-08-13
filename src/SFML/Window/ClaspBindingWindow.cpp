@@ -14,12 +14,14 @@
 #include <SFML/Window/Touch.hpp>
 #include <SFML/Window/Context.hpp>
 
-#include "/home/flash/dev/clasp-src/src/include/clasp.h"
-#include "/home/flash/dev/clasp-src/src/core/lispVector.h"
-#include "/home/flash/dev/clasp-src/src/core/vectorObjects.h"
-#include "/home/flash/dev/clasp-src/src/core/cons.h"
-#include "/home/flash/dev/clasp-src/src/core/translators.h"  // assorted translators for string etc
-#include "/home/flash/dev/clasp-src/src/core/str.h"
+
+#include <clasp/core/foundation.h>
+#include <clasp/clbind/clbind.h>
+#include <clasp/core/lispVector.h>
+#include <clasp/core/vectorObjects.h>
+#include <clasp/core/cons.h>
+#include <clasp/core/translators.h>
+#include <clasp/core/str.h>
 
 #define EXPORT __attribute__((visibility("default")))
 
@@ -47,7 +49,7 @@ extern "C" {
 
 	   ,
 	   class_<sf::Joystick>("joystick")
-	   .enum_<sf::Joystick::Axis>(core::lisp_intern("SFML", "*JOYSTICK-AXIS-ENUM-MAPPER*"))
+	   .enum_<sf::Joystick::Axis>(core::lisp_intern("*JOYSTICK-AXIS-ENUM-MAPPER*", "SFML"))
 	   [
 	   value("joystick-axis/x", sf::Joystick::Axis::X),
 	   value("joystick-axis/y", sf::Joystick::Axis::Y),
@@ -131,7 +133,7 @@ extern "C" {
 
 	   ,class_<sf::Keyboard>("keyobard", no_default_constructor)
 
-	   .enum_<sf::Keyboard::Key>(core::lisp_intern("SFML", "*KEYBOARD-KEY-ENUM-MAPPER*"))
+	   .enum_<sf::Keyboard::Key>(core::lisp_intern("*KEYBOARD-KEY-ENUM-MAPPER*", "SFML"))
 	   [
 	   value("keyboard-key/unknown", sf::Keyboard::Key::Unknown),
 	   value("keyboard-key/a", sf::Keyboard::Key::A),
@@ -260,7 +262,7 @@ extern "C" {
 
 	   ,class_<sf::Mouse>("mouse", no_default_constructor)
 
-	   .enum_<sf::Mouse::Button>(core::lisp_intern("SFML", "*MOUSE-BUTTON-ENUM-MAPPER*"))
+	   .enum_<sf::Mouse::Button>(core::lisp_intern("*MOUSE-BUTTON-ENUM-MAPPER*", "SFML"))
 	   [
 	   value("mouse-button/left", sf::Mouse::Button::Left),
 	   value("mouse-button/right", sf::Mouse::Button::Right),
@@ -321,7 +323,7 @@ extern "C" {
 
 	   ,class_<sf::Sensor>("sensor", no_default_constructor)
 
-	   .enum_<sf::Sensor::Type>(core::lisp_intern("SFML", "*SENSOR-TYPE-ENUM-MAPPER*"))
+	   .enum_<sf::Sensor::Type>(core::lisp_intern("*SENSOR-TYPE-ENUM-MAPPER*", "SFML"))
 	   [
 	   value("sensor-type/accelerometer", sf::Sensor::Type::Accelerometer),
 	   value("sensor-type/gyroscope", sf::Sensor::Type::Gyroscope),
@@ -799,7 +801,7 @@ extern "C" {
 	   .def("get-joystick-connect-event", &sf::Event::getJoystickConnectEvent) 
 	   .def("get-touch-event", &sf::Event::getTouchEvent)                     
 	   .def("get-sensor-event", &sf::Event::getSensorEvent)                      
-	   . enum_<sf::Event::EventType>(core::lisp_intern("SFML","*ENUM-TO-SYMBOL-MAPPER*"))
+	   . enum_<sf::Event::EventType>(core::lisp_intern("*ENUM-TO-SYMBOL-MAPPER*", "SFML"))
 	   [ value("Closed",sf::Event::EventType::Closed) 
 	     , value("Resized",sf::Event::EventType::Resized)                
 	     , value("LostFocus",sf::Event::EventType::LostFocus)              

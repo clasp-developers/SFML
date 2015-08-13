@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
-#include "/home/flash/dev/clasp-src/src/clbind/clbind.h"
+#include <clasp/clbind/clbind.h>
 
 namespace translate
 {
