@@ -15,7 +15,7 @@ namespace translate
     static core::T_sp convert(sf::Mouse::Button v)
     {
       core::Symbol_sp converterSym = 
-        core::lisp_intern("SFML","*MOUSE-BUTTON-ENUM-MAPPER*");
+        core::lisp_intern("*MOUSE-BUTTON-ENUM-MAPPER*", "SFML");
       core::SymbolToEnumConverter_sp converter = 
         converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
       return converter->symbolForEnum<sf::Mouse::Button>(v);
@@ -33,7 +33,7 @@ namespace translate
       {
 	if (sym.notnilp()) 
         {
-	  core::Symbol_sp converterSym = core::lisp_intern("SFML","*MOUSE-BUTTON-ENUM-MAPPER*");
+	  core::Symbol_sp converterSym = core::lisp_intern("*MOUSE-BUTTON-ENUM-MAPPER*", "SFML");
 	  core::SymbolToEnumConverter_sp converter = 
             converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
 	  this->_v = converter->enumForSymbol<sf::Mouse::Button>(sym);

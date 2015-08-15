@@ -13,7 +13,7 @@ namespace translate
   {
     static core::T_sp convert(sf::Event::EventType v)
     {
-      core::Symbol_sp converterSym = core::lisp_intern("SFML","*ENUM-TO-SYMBOL-MAPPER*");
+      core::Symbol_sp converterSym = core::lisp_intern("*EVENT-EVENTTYPE-ENUM-MAPPER*", "SFML");
       core::SymbolToEnumConverter_sp converter = converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
       return converter->symbolForEnum<sf::Event::EventType>(v);
     }
@@ -28,7 +28,7 @@ namespace translate
     {
       if ( core::Symbol_sp sym = object.asOrNull<core::Symbol_O>() ) {
 	if ( sym.notnilp() ) {
-	  core::Symbol_sp converterSym = core::lisp_intern("SFML","*ENUM-TO-SYMBOL-MAPPER*");
+	  core::Symbol_sp converterSym = core::lisp_intern("*EVENT-EVENTTYPE-ENUM-MAPPER*", "SFML");
 	  core::SymbolToEnumConverter_sp converter = converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
 	  this->_v = converter->enumForSymbol<sf::Event::EventType>(sym);
 	  return;

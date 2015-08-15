@@ -14,7 +14,7 @@ namespace translate
     static core::T_sp convert(sf::Joystick::Axis v)
     {
       core::Symbol_sp converterSym = 
-        core::lisp_intern("SFML","*JOYSTICK-AXIS-ENUM-MAPPER*");
+        core::lisp_intern("*JOYSTICK-AXIS-ENUM-MAPPER*", "SFML");
       core::SymbolToEnumConverter_sp converter = 
         converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
       return converter->symbolForEnum<sf::Joystick::Axis>(v);
@@ -32,7 +32,7 @@ namespace translate
       {
 	if (sym.notnilp()) 
         {
-	  core::Symbol_sp converterSym = core::lisp_intern("SFML","*JOYSTICK-AXIS-ENUM-MAPPER*");
+	  core::Symbol_sp converterSym = core::lisp_intern("*JOYSTICK-AXIS-ENUM-MAPPER*", "SFML");
 	  core::SymbolToEnumConverter_sp converter = 
             converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
 	  this->_v = converter->enumForSymbol<sf::Joystick::Axis>(sym);

@@ -15,7 +15,7 @@ namespace translate
     static core::T_sp convert(sf::Sensor::Type v)
     {
       core::Symbol_sp converterSym = 
-        core::lisp_intern("SFML","*SENSOR-TYPE-ENUM-MAPPER*");
+        core::lisp_intern("*SENSOR-TYPE-ENUM-MAPPER*", "SFML");
       core::SymbolToEnumConverter_sp converter = 
         converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
       return converter->symbolForEnum<sf::Sensor::Type>(v);
@@ -33,7 +33,7 @@ namespace translate
       {
 	if (sym.notnilp()) 
         {
-	  core::Symbol_sp converterSym = core::lisp_intern("SFML","*SENSOR-TYPE-ENUM-MAPPER*");
+	  core::Symbol_sp converterSym = core::lisp_intern("*SENSOR-TYPE-ENUM-MAPPER*", "SFML");
 	  core::SymbolToEnumConverter_sp converter = 
             converterSym->symbolValue().as<core::SymbolToEnumConverter_O>();
 	  this->_v = converter->enumForSymbol<sf::Sensor::Type>(sym);

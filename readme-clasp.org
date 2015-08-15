@@ -16,7 +16,8 @@ This fork of SFML contains some early test bindings for accessing SFML from clas
   - sndfile
   - openal
 - Run cmake-gui, enter the src and build directories, hit configure and select "specify native compilers" and select the clang compiler from clasp-externals.
-- You will get an error message about two missing directories. Specifiy the CLASP_INCLUDE_PATH and EXTERNALS_CLASP_PATH manually. Hit configure again.
+- You will get an error message about two missing directories. Specifiy the CLASP_INCLUDE_PATH and EXTERNALS_CLASP_PATH manually. 
+- Hit configure again, then generate.
 - call "make" in the sfml build directory that you specified.
 
 * What do I do with it?

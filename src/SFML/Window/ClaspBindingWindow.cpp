@@ -801,7 +801,7 @@ extern "C" {
 	   .def("get-joystick-connect-event", &sf::Event::getJoystickConnectEvent) 
 	   .def("get-touch-event", &sf::Event::getTouchEvent)                     
 	   .def("get-sensor-event", &sf::Event::getSensorEvent)                      
-	   . enum_<sf::Event::EventType>(core::lisp_intern("*ENUM-TO-SYMBOL-MAPPER*", "SFML"))
+	   . enum_<sf::Event::EventType>(core::lisp_intern("*EVENT-EVENTTYPE-ENUM-MAPPER*", "SFML"))
 	   [ value("Closed",sf::Event::EventType::Closed) 
 	     , value("Resized",sf::Event::EventType::Resized)                
 	     , value("LostFocus",sf::Event::EventType::LostFocus)              
