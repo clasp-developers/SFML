@@ -790,6 +790,7 @@ extern "C" {
 	   . def_constructor("make-event",constructor<>())
 	   //. def_readonly("type", &sf::Event::type)
 	   .def("get-type", &sf::Event::getType)
+	   .def_readonly("type", &sf::Event::type)
 	   .def("get-size-event", &sf::Event::getSizeEvent)                       
 	   .def("get-key-event", &sf::Event::getKeyEvent)                         
 	   .def("get-text-event", &sf::Event::getTextEvent)                       
