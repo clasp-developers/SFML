@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 
+set(VARIANT release)
+set(CMAKE_CXX_COMPILER clang++)
+set(CLASP_INCLUDE_PATH /home/meister/Development/clasp/include)
+set(THIS_EXTERNAL_LIBS clasp-clbind boost-system)
+
 # define a macro that helps defining an option
 macro(sfml_set_option var default type docstring)
     if(NOT DEFINED ${var})
@@ -38,13 +43,14 @@ add_compile_options(-std=c++11
    -v 
    -fPIC
    -D_TARGET_OS_LINUX
+   -DX86
    -DNDEBUG
    -DUSE_BOEHM
+#   -DUSE_CXX_DYNAMIC_CAST   # DO NOT USE WITH BOEHM - ONLY BOEHMDC
+   -DUSE_ALLOCA_FOR_FRAME
    -D_ADDRESS_MODEL_64
    -Wl,--start-group
-   /home/flash/dev/clasp-src/src/gctools/bin/boehm/clasp/clang-linux-3.6.2/release/link-static/libgctools.a
-   /home/flash/dev/clasp-src/src/core/bin/boehm/clasp/clang-linux-3.6.2/release/link-static/libcore.a
-   /home/flash/dev/clasp-src/src/clbind/bin/boehm/clasp/clang-linux-3.6.2/release/link-static/libclbind.a
+    /home/meister/Development/clasp/build/clasp/Contents/execs/boehm/${VARIANT}/lib/libclasp-clbind.so
    -Wl,--end-group)
 
 # add an option for choosing the build type (shared or static)
