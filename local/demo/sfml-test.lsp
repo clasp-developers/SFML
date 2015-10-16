@@ -8,14 +8,15 @@
   (format t "Loading sfml-window~%")
   (let ((libdir (format nil "~a/build/clasp/Contents/execs/~a/~a/external-libs"
 			(ext:getenv "CLASP_HOME")
-			(ext:getenv "CLASP_GC")
-			(ext:getenv "CLASP_VARIANT"))))
-  (load (format nil "~a/libsfml-window.so" libdir))
-  (load (format nil "~a/libsfml-graphics.so" libdir))
-  (load (format nil "~a/libsfml-audio.so" libdir))
-  (format t "Libraries loaded~%"))
+			(if (ext:getenv "CLASP_GC") (ext:getenv "CLASP_GC") "boehm")
+			(if (ext:getenv "CLASP_VARIANT") (ext:getenv "CLASP_VARIANT") "release"))))
+    (load (format nil "~a/libsfml-window.so" libdir))
+    (load (format nil "~a/libsfml-graphics.so" libdir))
+    (load (format nil "~a/libsfml-audio.so" libdir))
+    (format t "Libraries loaded~%")))
 
 (load-sfml)
+  
 (let
     ((window (sf:make-render-window-vs '(400 400 24) "This is a clasp SFML Window"))
      (event (sf:make-event))
