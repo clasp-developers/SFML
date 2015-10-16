@@ -1,5 +1,6 @@
-export CLASP_GC=boehm
-export CLASP_VARIANT=release
+# use export CLASP_HOME to point to clasp
+export CLASP_GC ?= boehm
+export CLASP_VARIANT ?= release
 
 setup:
 	make setup-release
