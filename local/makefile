@@ -1,4 +1,5 @@
-export GC=boehm
+export CLASP_GC=boehm
+export CLASP_VARIANT=release
 
 setup:
 	make setup-release
@@ -22,8 +23,8 @@ build-release:
 build-debug:
 	(cd debug; make)
 
-export RDEST = /home/meister/Development/clasp/build/clasp/Contents/execs/$(GC)/release/external-libs
-export DDEST = /home/meister/Development/clasp/build/clasp/Contents/execs/$(GC)/debug/external-libs
+export RDEST = $(CLASP_HOME)/build/clasp/Contents/execs/$(CLASP_GC)/release/external-libs
+export DDEST = $(CLASP_HOME)/build/clasp/Contents/execs/$(CLASP_GC)/debug/external-libs
 
 install-release:
 	install -d $(RDEST)

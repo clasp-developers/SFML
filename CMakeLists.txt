@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(VARIANT release)
+set(VARIANT $ENV{CLASP_VARIANT})
+set(GC $ENV{CLASP_GC})
+set(CLASP_HOME $ENV{CLASP_HOME})
+set(CLASP_INCLUDE_PATH ${CLASP_HOME}/include)
 set(CMAKE_CXX_COMPILER clang++)
-set(CLASP_INCLUDE_PATH /home/meister/Development/clasp/include)
 set(THIS_EXTERNAL_LIBS clasp-clbind boost-system)
 
 # define a macro that helps defining an option
@@ -34,7 +36,7 @@ find_path(EXTERNALS_CLASP_PATH gc_cpp.h DOC "The directory of externals-clasp")
 # add the SFML header path
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
   ${CLASP_INCLUDE_PATH}
-  ${EXTERNALS_CLASP_PATH}/build/common/include
+#  ${EXTERNALS_CLASP_PATH}/build/common/include
   #/home/flash/dev/externals-clasp/build/common/include
   #/home/flash/dev/clasp-src/include
   )
@@ -50,7 +52,7 @@ add_compile_options(-std=c++11
    -DUSE_ALLOCA_FOR_FRAME
    -D_ADDRESS_MODEL_64
    -Wl,--start-group
-    /home/meister/Development/clasp/build/clasp/Contents/execs/boehm/${VARIANT}/lib/libclasp-clbind.so
+    ${CLASP_HOME}/build/clasp/Contents/execs/${GC}/${VARIANT}/lib/libclasp-clbind.so
    -Wl,--end-group)
 
 # add an option for choosing the build type (shared or static)

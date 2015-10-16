@@ -1,21 +1,23 @@
 ;; this should be the path where the sfml libraries are located.
-(setf *DEFAULT-PATHNAME-DEFAULTS* #P"~/Development/SFML/local/build/lib/")
+;(setf *DEFAULT-PATHNAME-DEFAULTS* #P"~/Development/SFML/local/build/lib/")
 ;; this should be the path where the graphics and the music file
 ;; referenced below are located.
-(ext:chdir #P"~/Development/SFML/local/demo/")
+;(ext:chdir #P"~/Development/SFML/local/demo/")
 (defun load-sfml ()
   "Load all available SFML libraries."
   (format t "Loading sfml-window~%")
-  (load "/home/meister/Development/clasp/build/clasp/Contents/execs/boehm/release/external-libs/libsfml-window.so")
-  (format t "Loading sfml-graphics~%")
-  (load "/home/meister/Development/clasp/build/clasp/Contents/execs/boehm/release/external-libs/libsfml-graphics.so")
-  (format t "Loading sfml-audio~%")
-  (load "/home/meister/Development/clasp/build/clasp/Contents/execs/boehm/release/external-libs/libsfml-audio.so")
+  (let ((libdir (format nil "~a/build/clasp/Contents/execs/~a/~a/external-libs"
+			(ext:getenv "CLASP_HOME")
+			(ext:getenv "CLASP_GC")
+			(ext:getenv "CLASP_VARIANT"))))
+  (load (format nil "~a/libsfml-window.so" libdir))
+  (load (format nil "~a/libsfml-graphics.so" libdir))
+  (load (format nil "~a/libsfml-audio.so" libdir))
   (format t "Libraries loaded~%"))
 
 (load-sfml)
 (let
-    ((window (sf:make-render-window-vs '(400 400 32) "This is a clasp SFML Window"))
+    ((window (sf:make-render-window-vs '(400 400 24) "This is a clasp SFML Window"))
      (event (sf:make-event))
      (texture (sf:make-texture))
      (music (sf:make-music))
