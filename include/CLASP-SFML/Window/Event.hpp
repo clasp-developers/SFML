@@ -18,6 +18,15 @@ namespace translate
       return converter->symbolForEnum<sf::Event::EventType>(v);
     }
   };
+    template <>
+    struct to_object<sf::Event::EventType, translate::adopt_pointer>
+  {
+      static core::T_sp convert(sf::Event::EventType v)
+      {
+	  return to_object<sf::Event::EventType>::convert(v);
+      }
+    };
+
 
   template <>
   struct from_object<sf::Event::EventType>

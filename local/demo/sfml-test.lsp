@@ -9,10 +9,10 @@
   (let ((libdir (format nil "~a/build/clasp/Contents/execs/~a/~a/external-libs"
 			(ext:getenv "CLASP_HOME")
 			(if (ext:getenv "CLASP_GC") (ext:getenv "CLASP_GC") "boehm")
-			(if (ext:getenv "CLASP_VARIANT") (ext:getenv "CLASP_VARIANT") "release"))))
-    (load (format nil "~a/libsfml-window.so" libdir))
-    (load (format nil "~a/libsfml-graphics.so" libdir))
-    (load (format nil "~a/libsfml-audio.so" libdir))
+			(if (ext:getenv "CLASP_VARIANT") (ext:getenv "CLASP_VARIANT") "debug"))))
+    (load (format nil "~a/libsfml-window-d.so" libdir))
+    (load (format nil "~a/libsfml-graphics-d.so" libdir))
+    (load (format nil "~a/libsfml-audio-d.so" libdir))
     (format t "Libraries loaded~%")))
 
 (load-sfml)
@@ -30,13 +30,14 @@
   (sf:open-from-file music "ACDC.ogg")
   (sf:play music)
   (loop while (sf:is-open window) do
-	(loop while (sf:poll-event window event) do
-	      (setf event-type (sf:get-type event))
-	      (cond
-	       ((eq event-type 'CLOSED) 
-		(sf:close window))))
-	(sf:clear window '(0 0 0 255))
-	(sf:draw window sprite)
-	(sf:display window))
+       (loop while (sf:poll-event window event) do
+	    #+(or)(setf event-type (sf:get-type event))
+	    (setf event-type (sf:type event))
+	    (cond
+	      ((eq event-type 'CLOSED) 
+	       (sf:close window))))
+       (sf:clear window '(0 0 0 255))
+       (sf:draw window sprite)
+       (sf:display window))
   ;;(sf:stop music)
   )
